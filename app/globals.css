@@ -1,0 +1,11 @@
+@import "tailwindcss";
+:root{--g:#58cc02;--gd:#58a700;--b:#1cb0f6;--bd:#1899d6;--o:#ff9600;--r:#ff4b4b;--line:#e5e5e5;--ink:#3c3c3c}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:#fff;font-weight:700;padding-bottom:96px;-webkit-tap-highlight-color:transparent}
+.btn{display:block;width:100%;padding:14px;border-radius:16px;background:var(--g);color:#fff;text-transform:uppercase;letter-spacing:.05em;font-weight:900;border-bottom:4px solid var(--gd)}
+.btn:active{transform:translateY(3px);border-bottom-width:1px}
+.btn.blue{background:var(--b);border-bottom-color:var(--bd)}
+.card{border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
+.inp{width:100%;border:2px solid var(--line);border-radius:14px;padding:12px;background:#f7f7f7;font-weight:700;margin-bottom:8px}
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .6s ease-out}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}}

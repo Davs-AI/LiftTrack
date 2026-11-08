@@ -1,0 +1,12 @@
+create table profiles (id uuid primary key references auth.users on delete cascade, username text, bodyweight numeric default 170, sex text default 'male', calorie_goal int default 2500, xp int default 0, streak int default 0, last_workout date, rank_score int default 0, code text unique default substr(md5(random()::text),1,6));
+create table sets (id bigint generated always as identity primary key, user_id uuid not null default auth.uid() references auth.users, exercise text, weight numeric, reps int, score int, created_at timestamptz default now());
+create table foods (id bigint generated always as identity primary key, user_id uuid not null default auth.uid() references auth.users, name text, calories int, protein int default 0, carbs int default 0, fat int default 0, day date default current_date);
+create table friends (user_id uuid not null, friend_id uuid not null, primary key (user_id, friend_id));
+alter table profiles enable row level security; alter table sets enable row level security; alter table foods enable row level security; alter table friends enable row level security;
+create policy "read profiles" on profiles for select to authenticated using (true);
+create policy "insert own profile" on profiles for insert to authenticated with check (id = auth.uid());
+create policy "update own profile" on profiles for update to authenticated using (id = auth.uid());
+create policy "own sets" on sets for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "own foods" on foods for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "read own friends" on friends for select to authenticated using (user_id = auth.uid());
+create policy "add friends" on friends for insert to authenticated with check (auth.uid() in (user_id, friend_id));
